@@ -1,0 +1,106 @@
+﻿using System;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+
+namespace FlashShake
+{
+    public partial class MainPage : ContentPage
+    {
+        // Variable to track if the flashlight is on or off (用来记录手电筒是开启还是关闭的变量)
+        private bool isFlashlightOn = false;
+
+        // Constructor of the page (页面的构造函数)
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+
+        // The method executed when the SOS MODE button is clicked (点击 SOS 模式按钮时执行的方法)
+        private void SOSMode_Clicked(object sender, EventArgs e)
+        {
+            // Force turn on the flashlight (强制开启手电筒)
+            isFlashlightOn = true;
+            // Switch to SOS mode, maximum brightness (切换到 SOS 模式，亮度设为最高)
+            UpdateFlashlightUI("SOS", "Maximum (Max)");
+        }
+
+        // The method executed when the big circular power button is clicked (中心大开关的点击逻辑)
+        private void PowerButton_Clicked(object sender, EventArgs e)
+        {
+            // Toggle the boolean state (切换布尔状态)
+            isFlashlightOn = !isFlashlightOn;
+            // Default to normal mode, medium brightness (默认普通模式，中等亮度)
+            UpdateFlashlightUI("Normal", "Medium");
+        }
+
+        // Reading mode button click logic (阅读模式按钮点击逻辑)
+        private void ReadingMode_Clicked(object sender, EventArgs e)
+        {
+            // Force turn on the flashlight (强制开启手电筒)
+            isFlashlightOn = true;
+            // Switch to reading mode, lowest brightness (切换到阅读模式，亮度设为最低)
+            UpdateFlashlightUI("Reading", "Lowest (Min)");
+        }
+
+        // Support light button click logic (辅助照明按钮点击逻辑)
+        private void SupportLight_Clicked(object sender, EventArgs e)
+        {
+            // Force turn on the flashlight (强制开启手电筒)
+            isFlashlightOn = true;
+            // Switch to support light mode, high brightness (切换到辅助照明模式，高亮度)
+            UpdateFlashlightUI("Support", "High");
+        }
+
+        // Helper method to uniformly control UI changes to avoid duplicate code (统一控制 UI 变化的辅助方法，避免重复写代码)
+        private void UpdateFlashlightUI(string mode, string brightness)
+        {
+            if (isFlashlightOn)
+            {
+                // If turned ON, change UI to active state (如果已开启，将界面改为激活状态的样式)
+                StatusLabel.Text = "Status: Open";
+                StatusLabel.TextColor = Colors.Green;
+                ModeLabel.Text = $"Model: {mode}";
+                BrightnessLabel.Text = $"Brightness: {brightness}";
+
+                PowerButton.BackgroundColor = Colors.LightGreen;
+                PowerButton.Text = "ON";
+            }
+            else
+            {
+                // If turned OFF, change UI back to default state (如果已关闭，将界面改回默认状态样式)
+                StatusLabel.Text = "Status: Close";
+                StatusLabel.TextColor = Colors.Black;
+                ModeLabel.Text = "Model: Normal";
+                BrightnessLabel.Text = "Brightness: Medium";
+
+                PowerButton.BackgroundColor = Color.FromArgb("#E0E0E0");
+                PowerButton.Text = "OFF";
+            }
+        }
+
+        // ============ Bottom navigation bar click events (底部导航栏的点击事件) ============
+
+        private void NavMain_Tapped(object sender, TappedEventArgs e)
+        {
+            // Already on the Main page, no need to jump (当前已经在主页，不用跳转)
+        }
+
+        private void NavShake_Tapped(object sender, TappedEventArgs e)
+        {
+            // Future code to navigate to the Shake page (未来跳转到摇一摇页面的代码)
+            DisplayAlert("Navigation", "Jumping to Shake Page...", "OK");
+        }
+
+        private void NavSupport_Tapped(object sender, TappedEventArgs e)
+        {
+            // Future code to navigate to the Support page (未来跳转到辅助页面的代码)
+            DisplayAlert("Navigation", "Jumping to Support Page...", "OK");
+        }
+
+        private void NavSettings_Tapped(object sender, TappedEventArgs e)
+        {
+            // Future code to navigate to the Settings page (未来跳转到设置页面的代码)
+            DisplayAlert("Navigation", "Jumping to Settings Page...", "OK");
+        }
+    }
+}
