@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
@@ -15,44 +15,26 @@ namespace FlashShake
             InitializeComponent();
         }
 
-        // The method executed when the SOS MODE button is clicked (点击 SOS 模式按钮时执行的方法)
-        private void SOSMode_Clicked(object sender, EventArgs e)
-        {
-            // Force turn on the flashlight (强制开启手电筒)
-            isFlashlightOn = true;
-            // Switch to SOS mode, maximum brightness (切换到 SOS 模式，亮度设为最高)
-            UpdateFlashlightUI("SOS", "Maximum (Max)");
-        }
-
         // The method executed when the big circular power button is clicked (中心大开关的点击逻辑)
         private void PowerButton_Clicked(object sender, EventArgs e)
         {
             // Toggle the boolean state (切换布尔状态)
-            isFlashlightOn = !isFlashlightOn;
-            // Default to normal mode, medium brightness (默认普通模式，中等亮度)
-            UpdateFlashlightUI("Normal", "Medium");
+            isFlashlightOn = !isFlashlightOn; 
+            // Default to normal mode (默认普通模式)
+            UpdateFlashlightUI("Normal"); 
         }
 
-        // Reading mode button click logic (阅读模式按钮点击逻辑)
-        private void ReadingMode_Clicked(object sender, EventArgs e)
+        // The method executed when the SOS MODE button is clicked (点击 SOS 模式按钮时执行的方法)
+        private void SOSMode_Clicked(object sender, EventArgs e)
         {
             // Force turn on the flashlight (强制开启手电筒)
-            isFlashlightOn = true;
-            // Switch to reading mode, lowest brightness (切换到阅读模式，亮度设为最低)
-            UpdateFlashlightUI("Reading", "Lowest (Min)");
-        }
-
-        // Support light button click logic (辅助照明按钮点击逻辑)
-        private void SupportLight_Clicked(object sender, EventArgs e)
-        {
-            // Force turn on the flashlight (强制开启手电筒)
-            isFlashlightOn = true;
-            // Switch to support light mode, high brightness (切换到辅助照明模式，高亮度)
-            UpdateFlashlightUI("Support", "High");
+            isFlashlightOn = true; 
+            // Switch to SOS mode (切换到 SOS 模式)
+            UpdateFlashlightUI("SOS"); 
         }
 
         // Helper method to uniformly control UI changes to avoid duplicate code (统一控制 UI 变化的辅助方法，避免重复写代码)
-        private void UpdateFlashlightUI(string mode, string brightness)
+        private void UpdateFlashlightUI(string mode)
         {
             if (isFlashlightOn)
             {
@@ -60,8 +42,7 @@ namespace FlashShake
                 StatusLabel.Text = "Status: Open";
                 StatusLabel.TextColor = Colors.Green;
                 ModeLabel.Text = $"Model: {mode}";
-                BrightnessLabel.Text = $"Brightness: {brightness}";
-
+                
                 PowerButton.BackgroundColor = Colors.LightGreen;
                 PowerButton.Text = "ON";
             }
@@ -71,8 +52,7 @@ namespace FlashShake
                 StatusLabel.Text = "Status: Close";
                 StatusLabel.TextColor = Colors.Black;
                 ModeLabel.Text = "Model: Normal";
-                BrightnessLabel.Text = "Brightness: Medium";
-
+                
                 PowerButton.BackgroundColor = Color.FromArgb("#E0E0E0");
                 PowerButton.Text = "OFF";
             }
