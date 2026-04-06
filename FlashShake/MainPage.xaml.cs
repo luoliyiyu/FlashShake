@@ -186,12 +186,13 @@ namespace FlashShake
 
         private void NavSupport_Tapped(object sender, TappedEventArgs e)
         {
-            DisplayAlert("Navigation", "Jumping to Support Page...", "OK");
+            Application.Current.MainPage = new SupportPage();
         }
 
         private void NavSettings_Tapped(object sender, TappedEventArgs e)
         {
-            DisplayAlert("Navigation", "Jumping to Settings Page...", "OK");
+            Application.Current.MainPage = new SettingPage();
         }
     }
 }
+
