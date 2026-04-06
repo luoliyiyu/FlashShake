@@ -9,12 +9,12 @@
 
         <Label Grid.Row="1" Text="Current status:" FontSize="14" Margin="0,0,0,5" TextColor="Gray"/>
 
-        <Border Grid.Row="2" BackgroundColor="#F0F8FF" CornerRadius="10" Padding="15" HasShadow="False" BorderColor="#B0C4DE">
+        <Frame Grid.Row="2" BackgroundColor="#F0F8FF" CornerRadius="10" Padding="15" HasShadow="False" BorderColor="#B0C4DE">
             <VerticalStackLayout Spacing="5">
                 <Label x:Name="StatusLabel" Text="Status: Close" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Label x:Name="ModeLabel" Text="Model: Normal" FontSize="14" TextColor="Black"/>
             </VerticalStackLayout>
-        </Border>
+        </Frame>
 
         <VerticalStackLayout Grid.Row="3" VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
 
@@ -59,6 +59,11 @@
                 <Label Text="⚙️" FontSize="24" HorizontalOptions="Center"/>
                 <Label Text="Settings" FontSize="12" HorizontalOptions="Center" TextColor="Gray"/>
             </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
+
+</ContentPage>
 
         </Grid>
     </Grid>
