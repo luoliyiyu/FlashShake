@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Storage; // Required for Preferences local storage (引入以支持 Preferences 本地存储)
 
 namespace FlashShake
 {
@@ -14,6 +15,25 @@ namespace FlashShake
         public ShakePage()
         {
             InitializeComponent();
+            // Load saved shake settings when page initializes (页面加载时读取已保存的摇一摇设置)
+            LoadCurrentSettings();
+        }
+
+        // Method to load saved settings into UI (加载已保存的设置到 UI 的方法)
+        private void LoadCurrentSettings()
+        {
+            // Load saved counts, use default values if not found (加载保存的次数，如果没有则使用默认值)
+            normalShakeCount = Preferences.Default.Get("NormalShakeCount", 2);
+            sosShakeCount = Preferences.Default.Get("SOSShakeCount", 3);
+            NormalTimesLabel.Text = normalShakeCount.ToString();
+            SOSTimesLabel.Text = sosShakeCount.ToString();
+
+            // Load sensitivity and restore the corresponding button highlight state (加载灵敏度并恢复对应的按钮高亮状态)
+            string sensitivity = Preferences.Default.Get("ShakeSensitivity", "Medium");
+            ResetButtonsStyle();
+            if (sensitivity == "Low") { BtnLow.BackgroundColor = Colors.Black; BtnLow.TextColor = Colors.White; }
+            else if (sensitivity == "High") { BtnHigh.BackgroundColor = Colors.Black; BtnHigh.TextColor = Colors.White; }
+            else { BtnMedium.BackgroundColor = Colors.Black; BtnMedium.TextColor = Colors.White; }
         }
 
         // Method executed when any sensitivity button is clicked (点击任何灵敏度按钮时执行的方法)
@@ -28,6 +48,9 @@ namespace FlashShake
             // Set the clicked button to selected style (将当前点击的按钮设置为选中时的黑色背景和白色文字)
             clickedButton.BackgroundColor = Colors.Black;
             clickedButton.TextColor = Colors.White;
+
+            // Save the selected sensitivity to local storage in real-time (将选择的灵敏度实时保存到本地)
+            Preferences.Default.Set("ShakeSensitivity", clickedButton.Text);
         }
 
         // Helper method to reset button styles (重置按钮样式的辅助方法)
@@ -55,6 +78,9 @@ namespace FlashShake
             {
                 normalShakeCount--;
                 NormalTimesLabel.Text = normalShakeCount.ToString();
+
+                // Save shake count for Normal mode (保存 Normal 模式摇晃次数)
+                Preferences.Default.Set("NormalShakeCount", normalShakeCount);
             }
         }
 
@@ -62,6 +88,9 @@ namespace FlashShake
         {
             normalShakeCount++;
             NormalTimesLabel.Text = normalShakeCount.ToString();
+
+            // Save shake count for Normal mode (保存 Normal 模式摇晃次数)
+            Preferences.Default.Set("NormalShakeCount", normalShakeCount);
         }
 
         private void SOSMinus_Clicked(object sender, EventArgs e)
@@ -71,6 +100,9 @@ namespace FlashShake
             {
                 sosShakeCount--;
                 SOSTimesLabel.Text = sosShakeCount.ToString();
+
+                // Save shake count for SOS mode (保存 SOS 模式摇晃次数)
+                Preferences.Default.Set("SOSShakeCount", sosShakeCount);
             }
         }
 
@@ -78,6 +110,9 @@ namespace FlashShake
         {
             sosShakeCount++;
             SOSTimesLabel.Text = sosShakeCount.ToString();
+
+            // Save shake count for SOS mode (保存 SOS 模式摇晃次数)
+            Preferences.Default.Set("SOSShakeCount", sosShakeCount);
         }
 
         // ============ Bottom navigation bar click events (底部导航栏的点击事件) ============
